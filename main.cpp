@@ -83,6 +83,20 @@ void guessLetter(string &ans, string &curr_guess, string &guessed) {
     }
 }
 
+bool guessAnswer(string ans) {
+    cout << "Make your guess: " << endl;
+    string guess;
+    cin >> guess;
+
+    if (guess == ans) {
+        cout << "Correct guess!" << endl;
+        return true;
+    } else {
+        cout << "Incorrect guess!" << endl;
+        return false;
+    }
+}
+
 
 
 void guess(string &guessed, string &ans) {}
@@ -121,35 +135,18 @@ int main() {
         cin >> choice;
 
         if (choice == 1) {
-            // guess letter logic
+            guessLetter(ans, curr_guess, guessed);
         } else if (choice == 2){
             // guess answer logic
+            if (guessAnswer(ans)) {
+                break;
+            }
         } else {
             cout << "Invalid. Choose 1 or 2." << endl;
         }
-
-        /* cout << "Pick a character to guess: ";
-        char letter;
-        cin >> letter;
-
-        // check if letter was guessed already
-        size_t pos = guessed.find(letter);
-
-        vector<size_t> positions;
-        if (pos != string::npos) {
-            cout << "Character already guessed! Try again." << endl;
-        } else {
-            guessed += letter;
-            // check if letter is in the word chosen
-            if (isValidGuess(ans, letter, curr_guess)) {
-                cout << "Valid guess" << endl;
-                print(curr_guess, guessed);
-            } else {
-                cout << "Incorrect guess" << endl;
-            }
-            
-        } */
     }
+
+    cout << "Thanks for playing!" << endl;
 
 
 
