@@ -6,6 +6,8 @@
 #include <string>
 #include <termios.h>
 #include <unistd.h> // For STDIN_FILENO
+#include <thread>  // For sleep_for
+#include <chrono>
 
 using namespace std;
 
@@ -33,6 +35,12 @@ string getHiddenInput() {
     return input;
 }
 
+void print(string &curr_guess, string guessed) {
+    cout << "Current correct letters: " << curr_guess << endl;
+    cout << endl;
+    cout << "Guess letters: " << guessed << endl;
+}
+
 bool isValidGuess(string &ans, char letter, string &curr_guess) {
     size_t pos = ans.find(letter);
     vector<size_t> positions;
@@ -51,11 +59,31 @@ bool isValidGuess(string &ans, char letter, string &curr_guess) {
     }
 }
 
-void print(string &curr_guess, string guessed) {
-    cout << "Current correct letters: " << curr_guess << endl;
-    cout << endl;
-    cout << "Guess letters: " << guessed << endl;
+void guessLetter(string &ans, string &curr_guess, string &guessed) {
+    cout << "Pick a character to guess: ";
+    char letter;
+    cin >> letter;
+
+    // check if letter was guessed already
+    size_t pos = guessed.find(letter);
+
+    vector<size_t> positions;
+    if (pos != string::npos) {
+        cout << "Character already guessed! Try again." << endl;
+    } else {
+        guessed += letter;
+        // check if letter is in the word chosen
+        if (isValidGuess(ans, letter, curr_guess)) {
+            cout << "Valid guess" << endl;
+            print(curr_guess, guessed);
+        } else {
+            cout << "Incorrect guess" << endl;
+        }
+        
+    }
 }
+
+
 
 void guess(string &guessed, string &ans) {}
 
@@ -80,7 +108,27 @@ int main() {
 
     bool seen = false;
     while (!seen) {
-        cout << "Pick a character to guess: ";
+
+
+        // create both choices:
+
+        cout << "Choose an option" << endl;
+        this_thread::sleep_for(chrono::seconds(1));
+        cout << "Guess letter (1)" << endl;
+        cout << "Guess answer (2)" << endl;
+
+        int choice;
+        cin >> choice;
+
+        if (choice == 1) {
+            // guess letter logic
+        } else if (choice == 2){
+            // guess answer logic
+        } else {
+            cout << "Invalid. Choose 1 or 2." << endl;
+        }
+
+        /* cout << "Pick a character to guess: ";
         char letter;
         cin >> letter;
 
@@ -100,7 +148,7 @@ int main() {
                 cout << "Incorrect guess" << endl;
             }
             
-        }
+        } */
     }
 
 
