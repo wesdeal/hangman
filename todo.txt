@@ -1,0 +1,7 @@
+1. make 2 choices for player: make a full guess, or make a single letter guess
+
+single letter guess:
+    only allow a single letter, error handling
+
+full guess:
+    do not give letters if guessed word contains, simply check for complete accuracy
