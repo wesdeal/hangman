@@ -131,19 +131,31 @@ int main() {
         cout << "Guess letter (1)" << endl;
         cout << "Guess answer (2)" << endl;
 
-        int choice;
-        cin >> choice;
 
-        if (choice == 1) {
-            guessLetter(ans, curr_guess, guessed);
-        } else if (choice == 2){
-            // guess answer logic
-            if (guessAnswer(ans)) {
-                break;
+        try {
+            int choice;
+            cin >> choice;
+
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw invalid_argument("ERROR: Invalid input.");
             }
-        } else {
-            cout << "Invalid. Choose 1 or 2." << endl;
+
+            if (choice == 1) {
+                guessLetter(ans, curr_guess, guessed);
+            } else if (choice == 2){
+                // guess answer logic
+                if (guessAnswer(ans)) {
+                    break;
+                }
+            } else {
+                cout << "Invalid. Choose 1 or 2." << endl;
+            }
+        } catch(const invalid_argument& e) {
+            cerr << e.what() << endl;
         }
+        
     }
 
     cout << "Thanks for playing!" << endl;
